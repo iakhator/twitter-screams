@@ -25,6 +25,7 @@ module.exports = (req, res, next) => {
     .then(snapshot => {
       snapshot.forEach(doc => {
         req.user.handle = doc.data().handle;
+        req.user.imageUrl = doc.data().imageUrl;
       });
       return next();
     })
