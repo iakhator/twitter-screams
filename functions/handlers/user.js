@@ -60,7 +60,9 @@ exports.signUp = (req, res) => {
       if (err.code === "auth/email-already-in-use") {
         return res.status(400).json({ email: "email is already in use" });
       }
-      return res.status(500).json({ error: err.code });
+      return res
+        .status(500)
+        .json({ general: "Somethiing went wrong, please try again" });
     });
 };
 
@@ -86,12 +88,9 @@ exports.login = (req, res) => {
     })
     .catch(err => {
       console.error(error);
-      if (err.code === "auth/wrong-password") {
-        return res
-          .status(403)
-          .json({ general: "Wrong credentials pleas try again" });
-      }
-      return res.status(500).json({ error: err.code });
+      return res
+        .status(403)
+        .json({ general: "Wrong credentials please try again" });
     });
 };
 
@@ -257,7 +256,7 @@ exports.getUserDetails = (req, res) => {
 
 exports.markNotificationsRead = (req, res) => {
   let batch = db.batch();
-  re.body.forEach(notificationId => {
+  req.body.forEach(notificationId => {
     const notification = db.doc(`/notifications/${notificationId}`);
     batch.update(notification, { read: true });
   });
