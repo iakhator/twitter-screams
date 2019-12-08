@@ -18,7 +18,9 @@ const {
   login,
   uploadImage,
   addUserDetails,
-  getUserDetails
+  getUser,
+  getUserDetails,
+  markNotificationsRead
 } = require("./handlers/user");
 
 // scream Routes
@@ -35,7 +37,9 @@ app.post("/signup", signUp);
 app.post("/login", login);
 app.post("/user/image", FBAuth, uploadImage);
 app.post("/user", FBAuth, addUserDetails);
-app.get("/user", FBAuth, getUserDetails);
+app.get("/user", FBAuth, getUser);
+app.get("/user/:handle", getUserDetails);
+app.get("/user/:handle", FBAuth, markNotificationsRead);
 
 exports.api = functions.region("europe-west1").https.onRequest(app);
 
