@@ -108,7 +108,7 @@ exports.deleteNoficationOnUnlike = functions
 exports.onUserImageChange = functions
   .region("europe-west1")
   .firestore.document("/users/{userId}")
-  .onUpdated(change => {
+  .onUpdate(change => {
     let batch = db.batch();
     if (change.before.data().imageUrl !== change.after.data().imageUrl) {
       return db
